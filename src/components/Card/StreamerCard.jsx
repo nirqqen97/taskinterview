@@ -1,9 +1,9 @@
-import {CardView, CircleImage, DownSidePart,Image, Info, Line, UpSidePart, Button } from "./Card.styled"
+import {CardView, CircleImage, DownSidePart,Image, Info, Line, UpSidePart, Button } from "./StreamerCard.styled"
 import messagePhoto from "../Images/pic.svg";
 import testPic from "../Images/Hansel.svg";
 
 
-export const Card = ( ) =>  {
+export const StreamerCard = ( ) =>  {
     // const handleClick = () => { 
     // if (user.isFollowed) {
     //     unSubscribe(id)

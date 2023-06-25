@@ -5,15 +5,16 @@
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import { useState } from "react";
-import { FieldText } from "./Form.styled";
+import { FieldText } from "./StreamerForm.styled";
 
-export const Form = ( ) => { 
+export const StreamerForm = ( ) => { 
 
   const [name, setName] = useState('')
   const [platform, setPlatform] = useState('')
 
  const handleNameChange = (e) => { 
   setName(e.target.value);
+
 
  }
   const handleChange = (e) => { 
@@ -23,6 +24,8 @@ export const Form = ( ) => {
   const handleSubmit = (e) => { 
     console.log('submitted')
     e.preventDefault()
+    setName('')
+    setPlatform('')
   }
   return ( 
     <form action="" onSubmit={handleSubmit}>

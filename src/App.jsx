@@ -1,17 +1,19 @@
 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.styled.jsx'
-import { Container } from './App.styled.jsx';
-import { Card } from "./components/Card/Card";
-import { Form } from './components/Form/Form';
+import { StreamerList } from './Pages/StreamerList/StreamerList.jsx';
+import { StreamerDescription } from './Pages/SreamerDescription/StreamerDescription.jsx';
+
 function App() {
 
   return (
-    <Container>
-      <Form/>
-     <Card/>
+    <BrowserRouter basename="taskinterview">
+      <Routes>
+        <Route path="/" element = {<StreamerList/>}/>
+        <Route path="/description" element={<StreamerDescription />} />
+      </Routes>
+    </BrowserRouter>
 
-     
-    </Container>
   )
 }
 

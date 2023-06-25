@@ -10,7 +10,7 @@ export const CircleImage = styled.img`
 export const GoImage = styled.img`
     margin-top : 20px;
     margin-left : 20px;
-    position : absolute`
+    position : absolute`;
 
 export const Image = styled.img`
     margin-bottom : 18px;
