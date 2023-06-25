@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { TextField } from '@mui/material';
 
 
-export const Input = styled.input`
-    border: 10px;
+export const FieldText = styled(TextField)`
+    margin-bottom: 20px;
 `
