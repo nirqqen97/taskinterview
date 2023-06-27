@@ -4,6 +4,7 @@ import { StreamerCard } from "../../components/Card/StreamerCard";
 import { StreamerForm } from "../../components/Form/StreamerForm";
 import { getStreamers, voteStreamer } from "../../Api";
 import { useEffect, useState } from "react";
+import { Wrap } from "./StreamerList.styled";
 
 export const StreamerList = () => {
   const [streamerList, setStreamerList] = useState([]);
@@ -29,6 +30,7 @@ export const StreamerList = () => {
   return (
     <>
       <StreamerForm />
+      <Wrap>
       {streamerList.map((user) => {
         return (
           <StreamerCard
@@ -39,6 +41,7 @@ export const StreamerList = () => {
           />
         );
       })}
+      </Wrap>
     </>
   );
 };

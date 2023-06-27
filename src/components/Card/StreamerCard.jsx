@@ -11,21 +11,23 @@ export const StreamerCard = ({ user, onUpvote, onDownvote }) => {
 
   const handleUpvote = () => {
     voteStreamer(user._id, "upvote");
-    onUpvote(); // Call the callback function to trigger the update in the parent component
+    onUpvote(); 
   };
 
   const handleDownvote = () => {
     voteStreamer(user._id, "downvote");
-    onDownvote(); // Call the callback function to trigger the update in the parent component
+    onDownvote(); 
   };
 
   const handleCardClick = (event) => {
     // Check if the clicked element is a button
     const isButton = event.target.tagName.toLowerCase() === "button";
     if (!isButton) {
-      navigate("/description");
+      navigate(`/${user._id}`);
     }
   };
+
+  const truncatedDescription = user.description.length > 18 ? user.description.substring(0, 18) + "..." : user.description;
 
   return (
     <CardView onClick={handleCardClick}>
@@ -37,7 +39,7 @@ export const StreamerCard = ({ user, onUpvote, onDownvote }) => {
       </Line>
       <DownSidePart>
         <Info> NickName: {user.author} </Info>
-        <Info> Description: {user.description}</Info>
+        <Info> Description: {truncatedDescription}</Info>
         <Info> Platform: {user.platform}</Info>
         <Info>
           Upvote: {user.upvote} DownVote: {user.downvote}

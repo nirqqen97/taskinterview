@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter basename="taskinterview">
       <Routes>
         <Route path="/" element = {<StreamerList/>}/>
-        <Route path="/description" element={<StreamerDescription />} />
+        <Route path="/:streamerId" element={<StreamerDescription />} />
       </Routes>
     </BrowserRouter>
 
