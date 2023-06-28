@@ -1,14 +1,29 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom"
+import { getStreamerById } from "../../Api";
+import { useEffect, useState } from "react";
+import { Header } from "../../components/Header/Header";
 
 
 export const StreamerDescription = ( ) => {
-
-    let { userId } = useParams();
-    console.log('streamerId: ', userId);
-
+    const [streamer, setStreamer] = useState([])
+    const {streamerId} = useParams()
+    useEffect(() => {
+        const fetchData = async () => {
+          const response = await getStreamerById(streamerId);
+          setStreamer(response);
+          
+        };
+        fetchData();
+      }, []);
+    
     return (
-        <div>
-            asd
-        </div>
+        <>
+        <Header/>
+            {streamer.author}
+            {streamer.description}
+            {streamer.upvote}
+            {streamer.downvote}
+            {streamer.platform}  
+        </>
     )
 }
