@@ -1,13 +1,9 @@
-import { Border, Nav } from "./Header.styled"
+import { Border, Nav } from "./Header.styled";
 
-
-export const Header = ( ) => { 
-  
-    return ( 
-        <Border>
-            <Nav to='/streamers'>
-            Streamers
-            </Nav>
-        </Border>
-    )
-}
+export const Header = () => {
+  return (
+    <Border>
+      <Nav to="/streamers">Streamers</Nav>
+    </Border>
+  );
+};

@@ -1,36 +1,62 @@
-import { CardView, CircleImage, DownSidePart, Image, Info, Line, UpSidePart, Button, ButtonWrap } from "./StreamerCard.styled";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { PropTypes } from "prop-types";
+import {
+  CardView,
+  CircleImage,
+  DownSidePart,
+  Image,
+  Info,
+  Line,
+  UpSidePart,
+  Button,
+  ButtonWrap,
+} from "./StreamerCard.styled";
 import messagePhoto from "../Images/pic.svg";
 import testPic from "../Images/Hansel.svg";
 import { voteStreamer } from "../../Api";
 
-export const StreamerCard = ({ user, onVote }) => {
+export const StreamerCard = React.memo(({ user, onVote }) => {
+  const {
+    _id,
+    author,
+    description,
+    platform,
+    upvote,
+    downvote,
+    isUpvoted,
+    isDownVoted,
+  } = user;
+
   const navigate = useNavigate();
 
-  const handleUpvote = async () => {
-    await voteStreamer(user._id, "upvote");
-    const updatedUser = { ...user, upvote: user.upvote + 1, isUpvoted : true };
-    onVote(updatedUser);
-  };
-
-  const handleDownvote = async () => {
-    await voteStreamer(user._id, "downvote");
-    const updatedUser = { ...user, downvote: user.downvote + 1, isDownVoted : true };
+  const handleVote = async (voteType) => {
+    await voteStreamer(_id, voteType);
+    const updatedUser = {
+      ...user,
+      [voteType === "upvote" ? "upvote" : "downvote"]:
+        user[voteType === "upvote" ? "upvote" : "downvote"] + 1,
+      isUpvoted: voteType === "upvote",
+      isDownVoted: voteType === "downvote",
+    };
     onVote(updatedUser);
   };
 
   const handleCardClick = (event) => {
     const isButton = event.target.tagName.toLowerCase() === "button";
     if (!isButton) {
-      navigate(`/${user._id}`);
+      navigate(`/${_id}`);
     }
   };
 
   const truncatedDescription =
-    user.description.length > 18 ? user.description.substring(0, 18) + "..." : user.description;
+    description.length > 18
+      ? `${description.substring(0, 18)}...`
+      : description;
 
   return (
     <CardView onClick={handleCardClick}>
+      {}
       <UpSidePart>
         <Image src={messagePhoto} alt="logo image" />
       </UpSidePart>
@@ -38,26 +64,26 @@ export const StreamerCard = ({ user, onVote }) => {
         <CircleImage src={testPic} width="79" height="79" />
       </Line>
       <DownSidePart>
-        <Info> NickName: {user.author} </Info>
+        <Info> NickName: {author} </Info>
         <Info> Description: {truncatedDescription}</Info>
-        <Info> Platform: {user.platform}</Info>
+        <Info> Platform: {platform}</Info>
         <Info>
-          Upvote: {user.upvote} DownVote: {user.downvote}
+          Upvote: {upvote} DownVote: {downvote}
         </Info>
         <ButtonWrap>
           <Button
             type="button"
-            followed={user.isUpvoted}
-            onClick={handleUpvote}
-            disabled={user.isUpvoted}
+            followed={isUpvoted}
+            onClick={() => handleVote("upvote")}
+            disabled={isUpvoted}
           >
             Upvote
           </Button>
           <Button
             type="button"
-            followed={user.isDownVoted}
-            onClick={handleDownvote}
-            disabled={user.isDownVoted}
+            followed={isDownVoted}
+            onClick={() => handleVote("downvote")}
+            disabled={isDownVoted}
           >
             Downvote
           </Button>
@@ -65,4 +91,18 @@ export const StreamerCard = ({ user, onVote }) => {
       </DownSidePart>
     </CardView>
   );
+});
+
+StreamerCard.propTypes = {
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+    author: PropTypes.string,
+    description: PropTypes.string,
+    platform: PropTypes.string,
+    upvote: PropTypes.number,
+    downvote: PropTypes.number,
+    isUpvoted: PropTypes.bool,
+    isDownVoted: PropTypes.bool,
+  }),
+  onVote: PropTypes.func,
 };

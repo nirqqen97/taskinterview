@@ -1,49 +1,56 @@
-
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { Container, FieldText, Flex, MuiSelect, FlexColumn } from "./StreamerForm.styled";
+import { PropTypes } from "prop-types";
+import {
+  Container,
+  FieldText,
+  Flex,
+  MuiSelect,
+  FlexColumn,
+  SbmtButton,
+} from "./StreamerForm.styled";
 import { postStreamers } from "../../Api";
 
 export const StreamerForm = ({ setStreamerList }) => {
-  const [author, setAuthor] = useState('');
-  const [platform, setPlatform] = useState('');
-  const [description, setDescription] = useState('');
+  const [author, setAuthor] = useState("");
+  const [platform, setPlatform] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleAuthorChange = (e) => {
-    setAuthor(e.target.value);
-  };
-
-  const handlePlatformChange = (e) => {
-    setPlatform(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "author":
+        setAuthor(value);
+        break;
+      case "platform":
+        setPlatform(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const test = async (user) => {
-      const response = await postStreamers(user);
-      return response;     
-    };
-
     const user = {
       author,
       platform,
       description,
-      picture: 'test'
+      picture: "test",
     };
 
-    const response = await test(user);
+    const response = await postStreamers(user);
 
     if (response) {
-      setDescription('');
-      setAuthor('');
-      setPlatform('');
+      setDescription("");
+      setAuthor("");
+      setPlatform("");
 
-      setStreamerList(prevList => [...prevList, response]);
+      setStreamerList((prevList) => [...prevList, response]);
     }
   };
 
@@ -53,14 +60,16 @@ export const StreamerForm = ({ setStreamerList }) => {
         <Flex>
           <FieldText
             label="Author"
+            name="author"
             value={author}
-            onChange={handleAuthorChange}
+            onChange={handleChange}
             required
           />
           <FieldText
             label="Description"
+            name="description"
             value={description}
-            onChange={handleDescriptionChange}
+            onChange={handleChange}
             required
           />
         </Flex>
@@ -70,9 +79,10 @@ export const StreamerForm = ({ setStreamerList }) => {
             <MuiSelect
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              name="platform"
               value={platform}
               label="Platform"
-              onChange={handlePlatformChange}
+              onChange={handleChange}
             >
               <MenuItem value="Twitch">Twitch</MenuItem>
               <MenuItem value="YouTube">YouTube</MenuItem>
@@ -81,9 +91,13 @@ export const StreamerForm = ({ setStreamerList }) => {
               <MenuItem value="Rumble">Rumble</MenuItem>
             </MuiSelect>
           </FormControl>
-          <button type="submit">Submit</button>
+          <SbmtButton type="submit">Submit</SbmtButton>
         </FlexColumn>
       </form>
     </Container>
   );
+};
+
+StreamerForm.propTypes = {
+  setStreamerList: PropTypes.func,
 };

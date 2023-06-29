@@ -1,7 +1,6 @@
-
 import { StreamerCard } from "../../components/Card/StreamerCard";
 import { StreamerForm } from "../../components/Form/StreamerForm";
-import { getStreamers, voteStreamer } from "../../Api";
+import { getStreamers } from "../../Api";
 import { useEffect, useState } from "react";
 import { Wrap } from "./StreamerList.styled";
 import { Header } from "../../components/Header/Header";
@@ -12,7 +11,11 @@ export const StreamerList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getStreamers();
-      const modifiedUsers = response.map((user) => ({ ...user, isUpvoted: false, isDownVoted: false }));
+      const modifiedUsers = response.map((user) => ({
+        ...user,
+        isUpvoted: false,
+        isDownVoted: false,
+      }));
       setStreamerList(modifiedUsers);
     };
     fetchData();
@@ -31,11 +34,7 @@ export const StreamerList = () => {
       <StreamerForm setStreamerList={setStreamerList} />
       <Wrap>
         {streamerList.map((user) => (
-          <StreamerCard
-            key={user._id}
-            user={user}
-            onVote={handleVote}
-          />
+          <StreamerCard key={user._id} user={user} onVote={handleVote} />
         ))}
       </Wrap>
     </>
