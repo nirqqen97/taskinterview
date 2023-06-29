@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { PropTypes } from "prop-types";
@@ -15,6 +16,7 @@ import {
 import messagePhoto from "../Images/pic.svg";
 import testPic from "../Images/Hansel.svg";
 import { voteStreamer } from "../../Api";
+import { truncateDescription } from "../Service/truncatedDescription";
 
 export const StreamerCard = React.memo(({ user, onVote }) => {
   const {
@@ -49,10 +51,7 @@ export const StreamerCard = React.memo(({ user, onVote }) => {
     }
   };
 
-  const truncatedDescription =
-    description.length > 18
-      ? `${description.substring(0, 18)}...`
-      : description;
+  const Description = truncateDescription(description, 18);
 
   return (
     <CardView onClick={handleCardClick}>
@@ -65,7 +64,7 @@ export const StreamerCard = React.memo(({ user, onVote }) => {
       </Line>
       <DownSidePart>
         <Info> NickName: {author} </Info>
-        <Info> Description: {truncatedDescription}</Info>
+        <Info> Description: {Description}</Info>
         <Info> Platform: {platform}</Info>
         <Info>
           Upvote: {upvote} DownVote: {downvote}

@@ -41,7 +41,9 @@ export const DownSidePart = styled.div`
 `;
 
 export const CardView = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 380px;
   height: 560px;
   border: 1px solid;
@@ -53,6 +55,20 @@ export const CardView = styled.div`
   );
   box-shadow: -2.5777px 6.87386px 20.6216px rgba(0, 0, 0, 0.23);
   border-radius: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 1140px) {
+    width: calc(33.33% - 20px);
+  }
+
+  @media (max-width: 860px) {
+    width: calc(50% - 20px);
+  }
+
+  @media (max-width: 580px) {
+    width: 100%;
+  }
 `;
 
 export const Line = styled.div`
