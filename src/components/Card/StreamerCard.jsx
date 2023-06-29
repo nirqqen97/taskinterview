@@ -45,7 +45,7 @@ export const StreamerCard = React.memo(({ user, onVote }) => {
   const handleCardClick = (event) => {
     const isButton = event.target.tagName.toLowerCase() === "button";
     if (!isButton) {
-      navigate(`/${_id}`);
+      navigate(`/streamers/${_id}`);
     }
   };
 

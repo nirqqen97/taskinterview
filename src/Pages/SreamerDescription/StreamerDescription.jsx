@@ -32,6 +32,12 @@ export const StreamerDescription = () => {
         <Wrap>
           <Info> Platform : {streamer.platform}</Info>
         </Wrap>
+        <Wrap>
+          <img
+            src="https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png"
+            alt="streamer image"
+          />
+        </Wrap>
       </Container>
     </>
   );
