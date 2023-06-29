@@ -1,3 +1,4 @@
+
 import { StreamerCard } from "../../components/Card/StreamerCard";
 import { StreamerForm } from "../../components/Form/StreamerForm";
 import { getStreamers, voteStreamer } from "../../Api";
@@ -11,46 +12,31 @@ export const StreamerList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getStreamers();
-      const modifiedUsers = response.map((user) => ({ ...user, isUpvoted: false, isDownVoted : false }));
+      const modifiedUsers = response.map((user) => ({ ...user, isUpvoted: false, isDownVoted: false }));
       setStreamerList(modifiedUsers);
     };
     fetchData();
   }, []);
 
-  const handleVote = async (id, vote) => {
-    await voteStreamer(id, vote);
-    setStreamerList((prevUsers) =>
-      prevUsers.map((user) => {
-        if (user._id === id) {
-          return {
-            ...user,
-            [vote]: user[vote] + 1,
-            isUpvoted: vote === "upvote" ? true : user.isUpvoted,
-            isDownVoted: vote === "downvote" ? true : user.isDownVoted,
-          };
-        }
-        return user;
-      })
+  const handleVote = async (updatedUser) => {
+    const updatedStreamers = streamerList.map((user) =>
+      user._id === updatedUser._id ? updatedUser : user
     );
+    setStreamerList(updatedStreamers);
   };
-  
-  
 
   return (
     <>
       <Header />
       <StreamerForm setStreamerList={setStreamerList} />
       <Wrap>
-        {streamerList.map((user) => {
-          return (
-            <StreamerCard
-              key={user._id}
-              user={user}
-              onUpvote={() => handleVote(user._id, "upvote")}
-              onDownvote={() => handleVote(user._id, "downvote")}
-            />
-          );
-        })}
+        {streamerList.map((user) => (
+          <StreamerCard
+            key={user._id}
+            user={user}
+            onVote={handleVote}
+          />
+        ))}
       </Wrap>
     </>
   );

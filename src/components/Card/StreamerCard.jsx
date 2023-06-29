@@ -4,16 +4,19 @@ import messagePhoto from "../Images/pic.svg";
 import testPic from "../Images/Hansel.svg";
 import { voteStreamer } from "../../Api";
 
-export const StreamerCard = ({ user, onUpvote, onDownvote, }) => {
+export const StreamerCard = ({ user, onVote }) => {
   const navigate = useNavigate();
+
   const handleUpvote = async () => {
     await voteStreamer(user._id, "upvote");
-    onUpvote();
+    const updatedUser = { ...user, upvote: user.upvote + 1, isUpvoted : true };
+    onVote(updatedUser);
   };
 
   const handleDownvote = async () => {
     await voteStreamer(user._id, "downvote");
-    onDownvote();
+    const updatedUser = { ...user, downvote: user.downvote + 1, isDownVoted : true };
+    onVote(updatedUser);
   };
 
   const handleCardClick = (event) => {

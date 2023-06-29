@@ -17,18 +17,24 @@ export const StreamerDescription = ( ) => {
           
         };
         fetchData();
-      }, []);
+      }, [streamerId]);
     
     return (
         <>
         <Header/>
         <Container>
           <Wrap>
-            <Info>{streamer.author}</Info>
-            <Info>{streamer.description}</Info>
-            <Info>{streamer.upvote}</Info>
-            <Info>{streamer.downvote}</Info>
-            <Info>{streamer.platform}</Info>  
+           
+            <Info> Name : {streamer.author}</Info>
+            <Info> Description : {streamer.description}</Info>
+            </Wrap>
+            <Wrap>
+
+            <Info> UpVotes : {streamer.upvote}</Info>
+            <Info> DownVotes : {streamer.downvote}</Info>
+            </Wrap>
+            <Wrap>
+            <Info> Platform : {streamer.platform}</Info>  
             </Wrap>
             
             </Container>
