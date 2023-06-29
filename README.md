@@ -35,11 +35,15 @@ PUT /streamers/:streamerId/:vote - Vote on a streamer (upvote or downvote)
 - React
 - React Router
 - Styled Components
+
   **Backend**:
+
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
+
   **Other libraries:**
+
   -Axios
   -PropTypes (for type checking)
