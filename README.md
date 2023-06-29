@@ -16,17 +16,18 @@ The frontend makes use of styled components for styling the UI elements and foll
 
 ## Getting Started
 
-npm install
-npm run dev
+- npm install
+
+- npm run dev
 
 ## API Endpoints
 
 The backend API provides the following endpoints:
 
-GET /streamers - Get all streamers
-POST /streamers - Add a new streamer
-GET /streamers/:streamerId - Get details of a specific streamer
-PUT /streamers/:streamerId/:vote - Vote on a streamer (upvote or downvote)
+- GET /streamers - Get all streamers
+- POST /streamers - Add a new streamer
+- GET /streamers/:streamerId - Get details of a specific streamer
+- PUT /streamers/:streamerId/:vote - Vote on a streamer (upvote or downvote)
 
 ## Technologies Used
 
@@ -36,14 +37,14 @@ PUT /streamers/:streamerId/:vote - Vote on a streamer (upvote or downvote)
 - React Router
 - Styled Components
 
-  **Backend**:
+**Backend**:
 
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
 
-  **Other libraries:**
+**Other libraries:**
 
-  -Axios
-  -PropTypes (for type checking)
+- Axios
+- PropTypes (for type checking)
