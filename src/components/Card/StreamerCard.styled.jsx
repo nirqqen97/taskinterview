@@ -34,7 +34,7 @@ export const DownSidePart = styled.div`
 export const CardView = styled.div`
     display : block;
     width: 380px;
-    height: 540px;
+    height: 560px;
     border: 1px solid;
     background: linear-gradient(114.99deg, #471CA9 -0.99%, #5736A3 54.28%, #4B2A99 78.99%);
     box-shadow: -2.5777px 6.87386px 20.6216px rgba(0, 0, 0, 0.23);
@@ -78,4 +78,8 @@ export const Info = styled.div`
     padding: 10px 56px;
   `;
 
-  
+export const ButtonWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`

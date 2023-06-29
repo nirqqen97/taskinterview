@@ -1,5 +1,3 @@
-// StreamerList.js
-
 import { StreamerCard } from "../../components/Card/StreamerCard";
 import { StreamerForm } from "../../components/Form/StreamerForm";
 import { getStreamers, voteStreamer } from "../../Api";
@@ -13,36 +11,46 @@ export const StreamerList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getStreamers();
-      setStreamerList(response);
+      const modifiedUsers = response.map((user) => ({ ...user, isUpvoted: false, isDownVoted : false }));
+      setStreamerList(modifiedUsers);
     };
     fetchData();
   }, []);
 
   const handleVote = async (id, vote) => {
     await voteStreamer(id, vote);
-    const updatedStreamers = [...streamerList];
-    const index = updatedStreamers.findIndex((user) => user._id === id);
-    if (index !== -1) {
-      updatedStreamers[index] = { ...updatedStreamers[index], [vote]: updatedStreamers[index][vote] + 1 };
-      setStreamerList(updatedStreamers);
-    }
+    setStreamerList((prevUsers) =>
+      prevUsers.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            [vote]: user[vote] + 1,
+            isUpvoted: vote === "upvote" ? true : user.isUpvoted,
+            isDownVoted: vote === "downvote" ? true : user.isDownVoted,
+          };
+        }
+        return user;
+      })
+    );
   };
+  
+  
 
   return (
     <>
-    <Header/>
-      <StreamerForm />
+      <Header />
+      <StreamerForm setStreamerList={setStreamerList} />
       <Wrap>
-      {streamerList.map((user) => {
-        return (
-          <StreamerCard
-            key={user._id}
-            user={user}
-            onUpvote={() => handleVote(user._id, "upvote")}
-            onDownvote={() => handleVote(user._id, "downvote")}
-          />
-        );
-      })}
+        {streamerList.map((user) => {
+          return (
+            <StreamerCard
+              key={user._id}
+              user={user}
+              onUpvote={() => handleVote(user._id, "upvote")}
+              onDownvote={() => handleVote(user._id, "downvote")}
+            />
+          );
+        })}
       </Wrap>
     </>
   );

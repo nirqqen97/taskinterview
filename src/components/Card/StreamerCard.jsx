@@ -1,33 +1,30 @@
-// StreamerCard.js
-
-import { CardView, CircleImage, DownSidePart, Image, Info, Line, UpSidePart, Button } from "./StreamerCard.styled";
+import { CardView, CircleImage, DownSidePart, Image, Info, Line, UpSidePart, Button, ButtonWrap } from "./StreamerCard.styled";
 import { useNavigate } from "react-router-dom";
 import messagePhoto from "../Images/pic.svg";
 import testPic from "../Images/Hansel.svg";
 import { voteStreamer } from "../../Api";
 
-export const StreamerCard = ({ user, onUpvote, onDownvote }) => {
+export const StreamerCard = ({ user, onUpvote, onDownvote, }) => {
   const navigate = useNavigate();
-
-  const handleUpvote = () => {
-    voteStreamer(user._id, "upvote");
-    onUpvote(); 
+  const handleUpvote = async () => {
+    await voteStreamer(user._id, "upvote");
+    onUpvote();
   };
 
-  const handleDownvote = () => {
-    voteStreamer(user._id, "downvote");
-    onDownvote(); 
+  const handleDownvote = async () => {
+    await voteStreamer(user._id, "downvote");
+    onDownvote();
   };
 
   const handleCardClick = (event) => {
-    // Check if the clicked element is a button
     const isButton = event.target.tagName.toLowerCase() === "button";
     if (!isButton) {
       navigate(`/${user._id}`);
     }
   };
 
-  const truncatedDescription = user.description.length > 18 ? user.description.substring(0, 18) + "..." : user.description;
+  const truncatedDescription =
+    user.description.length > 18 ? user.description.substring(0, 18) + "..." : user.description;
 
   return (
     <CardView onClick={handleCardClick}>
@@ -44,14 +41,24 @@ export const StreamerCard = ({ user, onUpvote, onDownvote }) => {
         <Info>
           Upvote: {user.upvote} DownVote: {user.downvote}
         </Info>
-        <div>
-          <Button type="button" followed={false} onClick={handleUpvote}>
+        <ButtonWrap>
+          <Button
+            type="button"
+            followed={user.isUpvoted}
+            onClick={handleUpvote}
+            disabled={user.isUpvoted}
+          >
             Upvote
           </Button>
-          <Button type="button" followed={false} onClick={handleDownvote}>
+          <Button
+            type="button"
+            followed={user.isDownVoted}
+            onClick={handleDownvote}
+            disabled={user.isDownVoted}
+          >
             Downvote
           </Button>
-        </div>
+        </ButtonWrap>
       </DownSidePart>
     </CardView>
   );

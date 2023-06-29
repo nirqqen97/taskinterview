@@ -1,9 +1,10 @@
+
 import { FormControl, InputLabel, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { Container, FieldText, Flex, MuiSelect, FlexColumn } from "./StreamerForm.styled";
 import { postStreamers } from "../../Api";
 
-export const StreamerForm = () => {
+export const StreamerForm = ({ setStreamerList }) => {
   const [author, setAuthor] = useState('');
   const [platform, setPlatform] = useState('');
   const [description, setDescription] = useState('');
@@ -20,11 +21,12 @@ export const StreamerForm = () => {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const test = async (user) => {
       const response = await postStreamers(user);
+      return response;     
     };
 
     const user = {
@@ -34,11 +36,15 @@ export const StreamerForm = () => {
       picture: 'test'
     };
 
-    test(user);
+    const response = await test(user);
 
-    setDescription('');
-    setAuthor('');
-    setPlatform('');
+    if (response) {
+      setDescription('');
+      setAuthor('');
+      setPlatform('');
+
+      setStreamerList(prevList => [...prevList, response]);
+    }
   };
 
   return (
@@ -46,20 +52,20 @@ export const StreamerForm = () => {
       <form action="" onSubmit={handleSubmit}>
         <Flex>
           <FieldText
-            label="author"
+            label="Author"
             value={author}
             onChange={handleAuthorChange}
-            required // Add the required attribute
+            required
           />
           <FieldText
             label="Description"
             value={description}
             onChange={handleDescriptionChange}
-            required // Add the required attribute
+            required
           />
         </Flex>
         <FlexColumn>
-          <FormControl required> {/* Add the required attribute */}
+          <FormControl required>
             <InputLabel id="demo-simple-select-label">Platform</InputLabel>
             <MuiSelect
               labelId="demo-simple-select-label"
